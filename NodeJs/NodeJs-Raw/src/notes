@@ -1,0 +1,8 @@
+//dependency hishabe first ei npm i -D typescript ts-node @types/node dotenv then npx tsc --init egula install kore nite hob e
+
+//shafayathossain@Shafayats-MacBook-Air-191 NodeJs-Raw % node
+// Welcome to Node.js v24.11.0.
+// Type ".help" for more information.
+// > process.cwd()     //!cwd means current working directory
+// '/Users/shafayathossain/Documents/Next-Level-B6/NodeJs/NodeJs-Raw'
+// > 

@@ -58,3 +58,21 @@ function initializeDirectories() {
   console.log("Organized Folder Created!!!! ");
 }
 initializeDirectories();
+
+function getCategory(fileName) {
+  const ext = path.extname(fileName).toLowerCase();
+
+  for (const [category, extension] of Object.entries(categories)) {
+    if (extension.includes(ext)) {
+      return category;
+    }
+    return "others";
+  }
+}
+
+function organizeFiles() {
+  console.log("File Organizer\n");
+  console.log("Source Directory", sourceDir);
+  console.log("Organize Directory", organizedDir);
+  console.log("\n", +"_".repeat(60) + "\n");
+}
