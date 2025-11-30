@@ -1,17 +1,10 @@
-import http, { Server } from "http";
-const server: Server = http.createServer((req, res) => {
-  console.log("server is running");
-  if (req.url == "/" && req.method == "GET") {
-    res.writeHead(200, { "content-type": "application/json" });
-    res.end(
-      JSON.stringify({
-        message: " Node js with the typescript",
-        path: req.url,
-      })
-    );
-  }
-});
+import { createServer, Server } from "http";
+import productRoute from "./routes/product.route";
 
-server.listen(8000, () => {
-  console.log(`Server is running on port ${8000}`);
-});
+const server: Server = createServer((req, res)=>{
+    productRoute(req,res);
+})
+
+server.listen(8000,()=>{
+    console.log(`Server is running on port ${8000}`);
+})

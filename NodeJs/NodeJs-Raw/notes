@@ -1,0 +1,3 @@
+For creating a folder: mkdir ./folderName
+then making file on the folder: ti ./folderName/fileName(for powershell)
+and touch./folderName/fileName(for zsh)
