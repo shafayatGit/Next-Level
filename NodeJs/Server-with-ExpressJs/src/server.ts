@@ -1,7 +1,9 @@
+import { Message } from "./../../NodeJs-Raw/node_modules/esbuild/lib/main.d";
+import { Text } from "./../node_modules/path-to-regexp/dist/index.d";
+import dotenv from "dotenv";
 import path from "path";
 import express, { Request, Response } from "express";
 import { Pool } from "pg";
-import dotenv from "dotenv";
 const app = express();
 const port = 8000;
 
@@ -27,6 +29,17 @@ const initDB = async () => {
       created_at TIMESTAMP DEFAULT NOW(),
       updated_at TIMESTAMP DEFAULT NOW()
       )`);
+  await pool.query(`
+        CREATE TABLE IF NOT EXISTS todos(
+      id SERIAL PRIMARY KEY,
+      user_id INT REFERENCES users(id) ON DELETE CASCADE,
+      title VARCHAR(200) NOT NULL,
+      description TEXT,
+      completed BOOLEAN DEFAULT FALSE,
+      due_date DATE,
+      created_at TIMESTAMP DEFAULT NOW(),
+      updated_at TIMESTAMP DEFAULT NOW()
+  )`);
 };
 initDB();
 
@@ -34,13 +47,79 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Hello World!");
 });
 
-app.post("/", (req: Request, res: Response) => {
-  console.log(req.body); //server er console eta
+//User CRUD
+app.post("/users", async (req: Request, res: Response) => {
+  const { name, email } = req.body;
 
-  res.status(200).json({
-    message: "Post Method",
-    success: true,
-  });
+  //Sending Data to the DB
+  try {
+    const result = await pool.query(
+      `INSERT INTO users(name, email) VALUES($1,$2) RETURNING *`,
+      [name, email]
+    );
+    // console.log(result.rows[0]);
+
+    res.status(200).json({
+      success: true,
+      message: "Posted Successfully",
+      data: result.rows[0], //we can see this from our postman.. so no need to go to DB
+    });
+  } catch (err: any) {
+    res.status(201).json({
+      succuss: false,
+      message: err.message,
+    });
+  }
+});
+
+//getting all the user data
+app.get("/users", async (req: Request, res: Response) => {
+  try {
+    const result = await pool.query(`
+      SELECT * FROM users
+      `);
+    console.log(result.rows);
+
+    res.status(200).json({
+      success: true,
+      message: "Successfully Getting the DATA",
+      data: result.rows,
+    });
+  } catch (err: any) {
+    res.status(500).json({
+      success: false,
+      message: "You cannot enter here!!",
+    });
+  }
+});
+
+//getting user through id
+app.get("/users/:id", async (req: Request, res: Response) => {
+  try {
+    const result = await pool.query(
+      `
+      SELECT * FROM users WHERE id = $1
+      `,
+      [req.params.id]
+    );
+
+    if (result.rows.length === 0) {
+      res.status(404).json({
+        status: false,
+        message: "Nothing Found",
+      });
+    }
+    res.status(200).json({
+      status: true,
+      message: "Data getting from the DB",
+      data: result.rows[0],
+    });
+  } catch (err) {
+    res.status(500).json({
+      status: false,
+      message: "You can't get the data",
+    });
+  }
 });
 
 app.listen(port, () => {
