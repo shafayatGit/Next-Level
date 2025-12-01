@@ -1,5 +1,3 @@
-import { Message } from "./../../NodeJs-Raw/node_modules/esbuild/lib/main.d";
-import { Text } from "./../node_modules/path-to-regexp/dist/index.d";
 import dotenv from "dotenv";
 import path from "path";
 import express, { Request, Response } from "express";
