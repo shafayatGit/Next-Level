@@ -1,6 +1,8 @@
 Postgress Installation Process:
 
-1. npm i pg  --> eta server er sathe postgress er connection(connection-pool) build korbe
-2. Neon DB  --> database hishabe eta use korbo jeta muloto postgress use kore
-3. Making a Connection Pool 
+1. npm i pg --> eta server er sathe postgress er connection(connection-pool) build korbe
+2. Neon DB --> database hishabe eta use korbo jeta muloto postgress use kore
+3. Making a Connection Pool
 4. For Using env we have to config the dotenv and then have to join path name with .env and import the path from path.
+
+//Jodi default export hoy tahole {} thakena ar shudhu export hole {} thake
