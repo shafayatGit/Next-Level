@@ -50,8 +50,33 @@ const getSingleTodo = async (req: Request, res: Response) => {
     res.status(500).json({ error: "Failed to fetch todo" });
   }
 };
+
+const updateTodo = async (req: Request, res: Response) => {
+  const { title } = req.body;
+  try {
+    const result = await todoServices.updateTodo(title, req.params.user_id);
+    if (result.rows.length === 0) {
+      res.status(404).json({
+        status: false,
+        message: "Nothing Found",
+      });
+    } else {
+      res.status(200).json({
+        status: true,
+        message: "User Updated Successfully",
+        data: result.rows[0],
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Server Down",
+    });
+  }
+};
 export const todoController = {
   createTodo,
   getTodo,
   getSingleTodo,
+  updateTodo,
 };

@@ -1,4 +1,4 @@
-import { todoController } from './modules/todo/todo.controller';
+import { todoController } from "./modules/todo/todo.controller";
 import config from "./config";
 import express, { Request, Response } from "express";
 import initDB, { pool } from "./config/db";
@@ -38,16 +38,13 @@ app.delete("/users", userRoutes);
 app.use("/todos", todosRoutes);
 
 //Getting all the TODOS
-app.use("/todos",todosRoutes);
+app.use("/todos", todosRoutes);
 
 //getting single todo
 app.use("/todos", todosRoutes);
 
-
-
-
-
-
+//updating single todo
+app.use("/todos", todosRoutes);
 
 //Not Found Route --> 404
 app.use((req, res) => {

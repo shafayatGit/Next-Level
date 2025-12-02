@@ -13,4 +13,6 @@ router.get("/", todoController.getTodo);
 
 router.get("/:user_id", todoController.getSingleTodo);
 
+router.put("/:user_id", todoController.updateTodo);
+
 export const todosRoutes = router;
