@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 import path from "path";
-import express, { Request, Response } from "express";
+import express, { NextFunction, Request, Response } from "express";
 import { Pool } from "pg";
 const app = express();
 const port = 8000;
@@ -41,7 +41,15 @@ const initDB = async () => {
 };
 initDB();
 
-app.get("/", (req: Request, res: Response) => {
+//Logger Middleware
+const logger = (req: Request, res: Response, next: NextFunction) => {
+  console.log(
+    `${new Date().toISOString()} , path:${req.path}, method: ${req.method}`
+  );
+  next(); //that must have to be called because eta na dile porer function kaaj korbena
+};
+
+app.get("/", logger, (req: Request, res: Response) => {
   res.send("Hello World!");
 });
 
@@ -224,6 +232,16 @@ app.get("/todos", async (req: Request, res: Response) => {
       message: "Server Down",
     });
   }
+});
+
+//Not Found Route
+app.use((req, res) => {
+  //we will be using app.use for not found route
+  res.status(404).json({
+    success: false,
+    message: "Route not found!",
+    path: req.path,
+  });
 });
 
 app.listen(port, () => {
