@@ -1,8 +1,10 @@
+import { todoController } from './modules/todo/todo.controller';
 import config from "./config";
 import express, { Request, Response } from "express";
 import initDB, { pool } from "./config/db";
 import logger from "./middleware/logger";
 import { userRoutes } from "./modules/user/user.routes";
+import { todosRoutes } from "./modules/todo/todo.routes";
 const app = express();
 
 //!Parser Or Middleware
@@ -23,54 +25,29 @@ app.use("/users", userRoutes);
 app.use("/users", userRoutes);
 
 //getting single user through id
-app.use("/users/:id", userRoutes);
+app.use("/users", userRoutes);
 
 //PUT Method
-app.use("/users/:id", userRoutes);
+app.use("/users", userRoutes);
 
 //Delete Method
-app.delete("/users/:id", userRoutes);
+app.delete("/users", userRoutes);
 
 //?Todos CRUD
 //Post method
-app.post("/todos", async (req: Request, res: Response) => {
-  const { user_id, title } = req.body;
-
-  try {
-    const result = await pool.query(
-      `INSERT INTO todos (user_id,title) VALUES($1,$2) RETURNING *`,
-      [user_id, title]
-    );
-
-    res.status(200).json({
-      success: true,
-      message: "Posted Todo Successfully",
-      data: result.rows[0],
-    });
-  } catch (err) {
-    res.status(500).json({
-      success: false,
-      message: "Server Down",
-    });
-  }
-});
+app.use("/todos", todosRoutes);
 
 //Getting all the TODOS
-app.get("/todos", async (req: Request, res: Response) => {
-  try {
-    const result = await pool.query(`SELECT * FROM todos`);
-    res.status(200).json({
-      success: true,
-      message: "Successfully Getting the DATA",
-      data: result.rows,
-    });
-  } catch (err) {
-    res.status(500).json({
-      success: false,
-      message: "Server Down",
-    });
-  }
-});
+app.use("/todos",todosRoutes);
+
+//getting single todo
+app.use("/todos", todosRoutes);
+
+
+
+
+
+
 
 //Not Found Route --> 404
 app.use((req, res) => {

@@ -6,3 +6,9 @@ Postgress Installation Process:
 4. For Using env we have to config the dotenv and then have to join path name with .env and import the path from path.
 
 //Jodi default export hoy tahole {} thakena ar shudhu export hole {} thake
+
+
+//Modular System
+1. routes.ts --> router create kore method gula call kori
+2. controller.ts --> req,res,status send,error eshob handle kori
+3. services.ts --> query gula handle kori

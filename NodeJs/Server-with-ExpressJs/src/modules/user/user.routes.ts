@@ -11,12 +11,12 @@ router.post("/", userControllers.createUser);
 router.get("/", userControllers.getUser);
 
 //getting single user through id
-router.get("/", userControllers.getSingleUser);
+router.get("/:id", userControllers.getSingleUser);
 
 //PUT Method
-router.put("/", userControllers.updateUser);
+router.put("/:id", userControllers.updateUser);
 
 //Delete Method
-router.delete("/", userControllers.deleteUser);
+router.delete("/:id", userControllers.deleteUser);
 
 export const userRoutes = router;
