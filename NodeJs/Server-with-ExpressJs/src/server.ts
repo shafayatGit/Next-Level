@@ -21,29 +21,7 @@ app.get("/", logger, (req: Request, res: Response) => {
 //?Users CRUD --> ekhane use diye kaaj korte hobe ar route theke direct get,post,put,patch,delete use korte hobe
 app.use("/users", userRoutes);
 
-//getting all the user data
-app.use("/users", userRoutes);
-
-//getting single user through id
-app.use("/users", userRoutes);
-
-//PUT Method
-app.use("/users", userRoutes);
-
-//Delete Method
-app.delete("/users", userRoutes);
-
 //?Todos CRUD
-//Post method
-app.use("/todos", todosRoutes);
-
-//Getting all the TODOS
-app.use("/todos", todosRoutes);
-
-//getting single todo
-app.use("/todos", todosRoutes);
-
-//updating single todo
 app.use("/todos", todosRoutes);
 
 //Not Found Route --> 404
